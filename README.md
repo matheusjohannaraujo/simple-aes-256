@@ -3,7 +3,7 @@
 Country: Brasil<br>
 State: Pernambuco<br>
 Developer: Matheus Johann Araújo<br>
-Date: 2020-11-20<br>
+Date: 2024-05-12<br>
 
 EN-US: A class made in php to work with AES 256 with CBC or GCM.<br>
 ----------------------------------------------------------------------------------------<br>
