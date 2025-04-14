@@ -1,10 +1,81 @@
-### https://github.com/matheusjohannaraujo/aes_256_cbc_or_gcm
+# Simple AES 256
 
-Country: Brasil<br>
-State: Pernambuco<br>
-Developer: Matheus Johann Araújo<br>
-Date: 2024-05-12<br>
+**Simple AES 256** is a PHP class designed to simplify encryption and decryption using AES-256 in CBC or GCM modes.
 
-EN-US: A class made in php to work with AES 256 with CBC or GCM.<br>
-----------------------------------------------------------------------------------------<br>
-PT-BR: Uma classe feita em php para trabalhar com AES 256 com CBC ou GCM.
+## 📦 Installation
+
+You can install the library via Composer:
+
+```bash
+composer require mjohann/simple-aes-256
+```
+
+## ⚙️ Requirements
+
+- PHP 7.0 or higher
+
+## 🚀 Features
+
+- Supported AES 256 CBC and AES 256 GCM:
+  - `encrypt`
+  - `decrypt`
+  - `key`
+  - `tag`
+
+## 🧪 Usage Example
+
+```php
+<?php
+
+require_once "vendor/autoload.php";
+
+use MJohann\Packlib\SimpleAES256;
+
+$text = "My name is Matheus";
+$aes = new SimpleAES256();
+$aes->setKey("MyPassword");
+
+// AES 256 CBC -----------------------------------------------
+$encrypt1 = $aes->encrypt_cbc($text);
+$decrypt1 = $aes->decrypt_cbc($encrypt1);
+
+echo "Simple AES 256 CBC", PHP_EOL;
+echo "Text: ", $text, PHP_EOL;
+echo "Encrypt: ", $encrypt1, PHP_EOL;
+echo "Decrypt: ", $decrypt1, PHP_EOL, PHP_EOL;
+
+// AES 256 GCM -----------------------------------------------
+$tag = "";
+$encrypt2 = $aes->encrypt_gcm($text, $tag);
+$decrypt2 = $aes->decrypt_gcm($encrypt2, $tag);
+
+echo "Simple AES 256 GCM", PHP_EOL;
+echo "Text: ", $text, PHP_EOL;
+echo "Encrypt: ", $encrypt2, PHP_EOL;
+echo "Decrypt: ", $decrypt2, PHP_EOL;
+echo "Tag: ", $tag, PHP_EOL, PHP_EOL;
+```
+
+For more examples, see the [`example/script.php`](example/script.php) file in the repository.
+
+## 📁 Project Structure
+
+```
+simple-aes-256/
+├── src/
+│   └── SimpleAES256.php
+├── example/
+│   └── script.php
+├── composer.json
+├── .gitignore
+├── LICENSE
+└── README.md
+```
+
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+
+## 👨‍💻 Author
+
+Developed by [Matheus Johann Araújo](https://github.com/matheusjohannaraujo) – Pernambuco, Brazil.
