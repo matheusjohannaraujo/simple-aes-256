@@ -4,7 +4,7 @@
 
 ## 📦 Installation
 
-You can install the library via Composer:
+You can install the library via [Packagist/Composer](https://packagist.org/packages/mjohann/simple-aes-256):
 
 ```bash
 composer require mjohann/simple-aes-256
