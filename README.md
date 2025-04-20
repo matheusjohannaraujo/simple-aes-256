@@ -1,6 +1,6 @@
-# Simple AES 256
+# [Simple AES 256](https://github.com/matheusjohannaraujo/simple-aes-256)
 
-**Simple AES 256** is a PHP class designed to simplify encryption and decryption using AES-256 in CBC or GCM modes.
+**SimpleAES256** is a PHP class designed to simplify encryption and decryption using AES-256 in CBC or GCM modes.
 
 ## 📦 Installation
 
@@ -12,7 +12,7 @@ composer require mjohann/simple-aes-256
 
 ## ⚙️ Requirements
 
-- PHP 7.0 or higher
+- PHP 8.0 or higher
 
 ## 🚀 Features
 
@@ -29,11 +29,11 @@ composer require mjohann/simple-aes-256
 
 require_once "vendor/autoload.php";
 
-use MJohann\Packlib\SimpleAES256;
+use MJohann\Packlib\Facades\SimpleAES256;
 
 $text = "My name is Matheus";
-$aes = new SimpleAES256();
-$aes->setKey("MyPassword");
+
+$aes = SimpleAES256::init("MyPassword");
 
 // AES 256 CBC -----------------------------------------------
 $encrypt1 = $aes->encrypt_cbc($text);
@@ -64,6 +64,8 @@ For more examples, see the [`example/script.php`](example/script.php) file in th
 simple-aes-256/
 ├── src/
 │   └── SimpleAES256.php
+│   └── Facades/
+│       └── SimpleAES256.php
 ├── example/
 │   └── script.php
 ├── composer.json

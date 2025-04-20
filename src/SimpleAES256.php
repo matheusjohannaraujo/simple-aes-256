@@ -5,7 +5,7 @@
 	Country: Brasil
 	State: Pernambuco
 	Developer: Matheus Johann Araujo
-	Date: 2025-04-14
+	Date: 2025-04-20
 */
 
 namespace MJohann\Packlib;
@@ -15,21 +15,48 @@ class SimpleAES256
 
     // The key defined here will be used in the AES 256 CBC and AES 256 GCM methods
 
-    private $key = "SimpleAES256";
+    private ?string $key = null;
 
-    public function setKey(string $key)
+    /**
+     * Class constructor.
+     * Initializes the class with an optional encryption key.
+     */
+    public function __construct(string $key = "SimpleAES256")
+    {
+        $this->key = $key;
+    }
+
+    /**
+     * Sets a new encryption key.
+     *
+     * @param string $key The encryption key.
+     * @return self
+     */
+    public function set_key(string $key)
     {
         $this->key = $key;
         return $this;
     }
 
-    public function getKey()
+    /**
+     * Returns the current encryption key.
+     *
+     * @return string
+     */
+    public function get_key(): string
     {
         return $this->key;
     }
 
     // Below are the methods for working with AES 256 with CBC
 
+    /**
+     * Encrypts a string using AES-256-CBC mode.
+     *
+     * @param string $text The plaintext to encrypt (by reference).
+     * @param string $key  The encryption key.
+     * @return string      The encrypted text (base64 encoded).
+     */
     private function enc_cbc(string &$text, string $key)
     {
         $key = substr(hash('sha256', $key, true), 0, 32);
@@ -40,6 +67,13 @@ class SimpleAES256
         return base64_encode($iv . $text);
     }
 
+    /**
+     * Decrypts a string using AES-256-CBC mode.
+     *
+     * @param string $text The encrypted text (by reference).
+     * @param string $key  The decryption key.
+     * @return string|null The decrypted plaintext.
+     */
     private function dec_cbc(string &$text, string $key)
     {
         $key = substr(hash('sha256', $key, true), 0, 32);
@@ -51,11 +85,23 @@ class SimpleAES256
         return base64_decode(openssl_decrypt($text, $cipher, $key, OPENSSL_RAW_DATA, $iv));
     }
 
+    /**
+     * Public method to encrypt a string using AES-256-CBC mode.
+     *
+     * @param string $text The plaintext to encrypt.
+     * @return string      The encrypted text.
+     */
     public function encrypt_cbc(string $text): string
     {
         return $this->enc_cbc($text, $this->key);
     }
 
+    /**
+     * Public method to decrypt a string using AES-256-CBC mode.
+     *
+     * @param string $text The encrypted text.
+     * @return string      The decrypted plaintext.
+     */
     public function decrypt_cbc(string $text): string
     {
         return $this->dec_cbc($text, $this->key);
@@ -63,6 +109,14 @@ class SimpleAES256
 
     // Below are the methods for working with AES 256 with GCM
 
+    /**
+     * Encrypts a string using AES-256-GCM mode.
+     *
+     * @param string $text The plaintext to encrypt (by reference).
+     * @param string $key  The encryption key.
+     * @param string $tag  The generated authentication tag (by reference).
+     * @return string      The encrypted text (base64 encoded).
+     */
     private function enc_gcm(string &$text, string $key, string &$tag)
     {
         $key = substr(hash('sha256', $key, true), 0, 32);
@@ -74,6 +128,14 @@ class SimpleAES256
         return base64_encode($iv . $tag . $text);
     }
 
+    /**
+     * Decrypts a string using AES-256-GCM mode.
+     *
+     * @param string $text The encrypted text (by reference).
+     * @param string $key  The decryption key.
+     * @param string $tag  The authentication tag.
+     * @return string|null The decrypted plaintext, or null if tag is missing or invalid.
+     */
     private function dec_gcm(string &$text, string $key, string $tag)
     {
         if (empty($tag)) {
@@ -91,6 +153,13 @@ class SimpleAES256
         return base64_decode(openssl_decrypt($text, $cipher, $key, OPENSSL_RAW_DATA, $iv, $tag));
     }
 
+    /**
+     * Public method to encrypt a string using AES-256-GCM mode.
+     *
+     * @param string $text The plaintext to encrypt.
+     * @param string &$tag The generated authentication tag (base64 encoded).
+     * @return string      The encrypted text.
+     */
     public function encrypt_gcm(string $text, string &$tag): string
     {
         $text = $this->enc_gcm($text, $this->key, $tag);
@@ -98,6 +167,13 @@ class SimpleAES256
         return $text;
     }
 
+    /**
+     * Public method to decrypt a string using AES-256-GCM mode.
+     *
+     * @param string $text The encrypted text.
+     * @param string $tag  The authentication tag (base64 encoded).
+     * @return string      The decrypted plaintext.
+     */
     public function decrypt_gcm(string $text, string $tag): string
     {
         return $this->dec_gcm($text, $this->key, $tag);

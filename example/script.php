@@ -8,13 +8,13 @@
 	Date: 2025-04-14
 */
 
-require_once "../vendor/autoload.php";
-
 use MJohann\Packlib\SimpleAES256;
 
+require_once "../vendor/autoload.php";
+
 $text = "My name is Matheus";
-$aes = new SimpleAES256();
-$aes->setKey("MyPassword");
+
+$aes = new SimpleAES256("MyPassword");
 
 // AES 256 CBC -----------------------------------------------
 $encrypt1 = $aes->encrypt_cbc($text);
