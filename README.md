@@ -27,13 +27,12 @@ composer require mjohann/simple-aes-256
 ```php
 <?php
 
+use MJohann\Packlib\SimpleAES256;
+
 require_once "vendor/autoload.php";
 
-use MJohann\Packlib\Facades\SimpleAES256;
-
+$aes = new SimpleAES256("MyPassword");
 $text = "My name is Matheus";
-
-$aes = SimpleAES256::init("MyPassword");
 
 // AES 256 CBC -----------------------------------------------
 $encrypt1 = $aes->encrypt_cbc($text);
@@ -45,8 +44,8 @@ echo "Encrypt: ", $encrypt1, PHP_EOL;
 echo "Decrypt: ", $decrypt1, PHP_EOL, PHP_EOL;
 
 // AES 256 GCM -----------------------------------------------
-$tag = "";
-$encrypt2 = $aes->encrypt_gcm($text, $tag);
+$encrypt2 = $aes->encrypt_gcm($text);
+$tag = $aes->get_tag();
 $decrypt2 = $aes->decrypt_gcm($encrypt2, $tag);
 
 echo "Simple AES 256 GCM", PHP_EOL;
