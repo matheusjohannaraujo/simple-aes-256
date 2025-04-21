@@ -24,6 +24,7 @@ composer require mjohann/simple-aes-256
 
 ## 🧪 Usage Example
 
+### Example AES 256 CBC
 ```php
 <?php
 
@@ -34,25 +35,36 @@ require_once "vendor/autoload.php";
 $aes = new SimpleAES256("MyPassword");
 $text = "My name is Matheus";
 
-// AES 256 CBC -----------------------------------------------
-$encrypt1 = $aes->encrypt_cbc($text);
-$decrypt1 = $aes->decrypt_cbc($encrypt1);
+$encrypt = $aes->encrypt_cbc($text);
+$decrypt = $aes->decrypt_cbc($encrypt);
 
 echo "Simple AES 256 CBC", PHP_EOL;
 echo "Text: ", $text, PHP_EOL;
-echo "Encrypt: ", $encrypt1, PHP_EOL;
-echo "Decrypt: ", $decrypt1, PHP_EOL, PHP_EOL;
+echo "Encrypt: ", $encrypt, PHP_EOL;
+echo "Decrypt: ", $decrypt, PHP_EOL, PHP_EOL;
+```
 
-// AES 256 GCM -----------------------------------------------
-$encrypt2 = $aes->encrypt_gcm($text);
+### Example AES 256 GCM
+
+```php
+<?php
+
+use MJohann\Packlib\SimpleAES256;
+
+require_once "vendor/autoload.php";
+
+$aes = new SimpleAES256("MyPassword");
+$text = "My name is Matheus";
+
+$encrypt = $aes->encrypt_gcm($text);
 $tag = $aes->get_tag();
-$decrypt2 = $aes->decrypt_gcm($encrypt2, $tag);
+$decrypt = $aes->decrypt_gcm($encrypt, $tag);
 
 echo "Simple AES 256 GCM", PHP_EOL;
 echo "Text: ", $text, PHP_EOL;
-echo "Encrypt: ", $encrypt2, PHP_EOL;
-echo "Decrypt: ", $decrypt2, PHP_EOL;
+echo "Encrypt: ", $encrypt, PHP_EOL;
 echo "Tag: ", $tag, PHP_EOL, PHP_EOL;
+echo "Decrypt: ", $decrypt, PHP_EOL;
 ```
 
 For more examples, see the [`example/script.php`](example/script.php) file in the repository.
